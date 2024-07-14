@@ -1,13 +1,14 @@
-import express, { Express } from 'express';
-import dotenv from 'dotenv';
+import express, { Express } from 'express'
+import dotenv from 'dotenv'
+import logger from './middleware/logger/logger'
 
-dotenv.config();
+dotenv.config()
 
-const app: Express = express();
-const port = process.env.PORT || 3000;
+const app: Express = express()
+const port = process.env.PORT || 3000
 
-app.use(express.json());
+app.use(express.json())
 
 app.listen(port, () => {
-	console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+  logger.info(`Server is running at http://localhost:${port}`)
+})
