@@ -17,10 +17,13 @@ import { ApiError, ApiErrorCodes } from '../middleware/errorhandler/APIError'
 export const createReport = async (
   reportDto: ReportDto,
 ): Promise<ReportDao> => {
-  const newReport = convertReportDtoToDao(reportDto)
   try {
     const createdReport = await prisma.reportDao.create({
-      data: newReport,
+      data: {
+        id: undefined,
+        text: reportDto.text,
+        projectId: reportDto.project_id || '',
+      },
     })
     return createdReport
   } catch (error) {

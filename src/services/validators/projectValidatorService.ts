@@ -1,37 +1,31 @@
 import { z } from 'zod'
 import { ProjectDto } from '@api/generated'
 import { ApiError, ApiErrorCodes } from '../../middleware/errorhandler/APIError'
-import { updateReportValidator } from './reportValidatorService'
+import {
+  newReportValidator,
+  updateReportValidator,
+} from './reportValidatorService'
 
 /**
  * This is a zod schema for the id object used to validate the id of a project.
  */
-const projectIdValidator = z.string().uuid()
+export const projectIdValidator = z.string().uuid()
 
 /**
  * This is a zod schema for the project object used to validate the object on creation.
  */
 const newProjectValidator = z.object({
-  id: z.optional(z.string()),
+  id: z.optional(projectIdValidator),
   name: z.string(),
   description: z.string(),
-  projects: z.optional(
-    z
-      .array(z.string())
-      .default([])
-      .refine(value => value.length === 0, {
-        message:
-          'You cannot create projects and assign reports to them at the same time.',
-        path: ['projects'],
-      }),
-  ),
+  projects: z.optional(z.array(newReportValidator).length(0)),
 })
 
 /**
  * This is a zod schema for the project object used to validate the object on updates.
  */
 const updateProjectValidator = z.object({
-  id: z.string(),
+  id: projectIdValidator,
   name: z.string(),
   description: z.string(),
   projects: z.array(updateReportValidator).default([]),

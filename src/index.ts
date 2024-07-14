@@ -9,6 +9,9 @@ import requestLogger from './middleware/logger/httplogger'
 import { HelloWorldResponseDto } from '../api/generated'
 import reportRouter from './routes/reportRouter'
 import projectRouter from './routes/projectRouter'
+import authHandler from './middleware/auth/authhandler'
+import errorHandler from './middleware/errorhandler/errorhandler'
+import projectReportRouter from './routes/projectReportRouter'
 
 dotenv.config()
 
@@ -31,8 +34,11 @@ app.get('/', (_: Request, res: Response) => {
   res.status(200).json({ msg: 'Hello World!' } as HelloWorldResponseDto)
 })
 
-app.use('/reports', [reportRouter()])
-app.use('/projects', [projectRouter()])
+app.use('/', authHandler)
+
+app.use('/', [reportRouter(), projectReportRouter(), projectRouter()])
+
+app.use(errorHandler)
 
 app.listen(port, () => {
   logger.info(`Server is running at http://localhost:${port}`)

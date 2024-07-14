@@ -14,7 +14,7 @@ export const convertReportDtoToDao = (reportDto: ReportDto): ReportDao => {
   return {
     id: reportDto.id || '',
     text: reportDto.text,
-    projectId: reportDto.project_id,
+    projectId: reportDto.project_id || '',
   }
 }
 

@@ -15,19 +15,25 @@ import {
 const projectReportRouter = () => {
   const router = Router()
 
-  router.get('/', asyncWrapper(getProjectsByProjectIdReports))
-  router.post('/', asyncWrapper(postProjectsByProjectIdReports))
+  router.get(
+    '/projects/:projectId/reports',
+    asyncWrapper(getProjectsByProjectIdReports),
+  )
+  router.post(
+    '/projects/:projectId/reports',
+    asyncWrapper(postProjectsByProjectIdReports),
+  )
 
   router.get(
-    '/:reportId',
+    '/projects/:projectId/reports/:reportId',
     asyncWrapper(getProjectsByProjectIdReportsByReportId),
   )
   router.put(
-    '/:reportId',
+    '/projects/:projectId/reports/:reportId',
     asyncWrapper(putProjectsByProjectIdReportsByReportId),
   )
   router.delete(
-    '/:reportId',
+    '/projects/:projectId/reports/:reportId',
     asyncWrapper(deleteProjectsByProjectIdReportsByReportId),
   )
 

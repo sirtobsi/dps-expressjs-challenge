@@ -264,7 +264,6 @@ paths:
       parameters:
         - name: query
           in: query
-          required: true
           description: Query word that needs to occur at least 3x
           schema:
             type: string
@@ -318,7 +317,6 @@ components:
           type: string
       required:
         - text
-        - project_id
     
   securitySchemes:
     bearerAuth:

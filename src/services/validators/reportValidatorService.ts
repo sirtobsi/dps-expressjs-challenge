@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { ReportDto } from '@api/generated'
 import { ApiError, ApiErrorCodes } from '../../middleware/errorhandler/APIError'
+import { projectIdValidator } from './projectValidatorService'
 
 /**
  * This is a zod schema for the id object used to validate the id of a report.
@@ -18,7 +19,7 @@ const reportTextValidator = z.string().min(1)
 export const newReportValidator = z.object({
   id: z.optional(reportIdValidator),
   text: reportTextValidator,
-  project_id: z.string(),
+  project_id: z.optional(projectIdValidator),
 })
 
 /**
@@ -27,7 +28,7 @@ export const newReportValidator = z.object({
 export const updateReportValidator = z.object({
   id: reportIdValidator,
   text: reportTextValidator,
-  project_id: z.string(),
+  project_id: projectIdValidator,
 })
 
 /**

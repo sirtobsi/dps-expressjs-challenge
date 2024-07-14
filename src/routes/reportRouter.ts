@@ -8,7 +8,7 @@ import { getReports } from '../controllers/reportController'
 const reportRouter = () => {
   const router = Router()
 
-  router.get('/', asyncWrapper(getReports))
+  router.get('/reports', asyncWrapper(getReports))
 
   return router
 }

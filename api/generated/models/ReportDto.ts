@@ -5,6 +5,6 @@
 export type ReportDto = {
     id?: string;
     text: string;
-    project_id: string;
+    project_id?: string;
 };
 

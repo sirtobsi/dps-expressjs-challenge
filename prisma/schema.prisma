@@ -21,5 +21,5 @@ model ReportDao {
   id        String     @id @default(uuid())
   text      String
   projectId String
-  project   ProjectDao @relation(fields: [projectId], references: [id])
+  project   ProjectDao @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
