@@ -17,7 +17,7 @@ const reportRouter = () => {
   router.get('/projects', asyncWrapper(getProjects))
   router.post('/projects', asyncWrapper(postProjects))
   router.get('/projects/:projectId', asyncWrapper(getProjectsByProjectId))
-  router.put('/projects//:projectId', asyncWrapper(putProjectsByProjectId))
+  router.put('/projects/:projectId', asyncWrapper(putProjectsByProjectId))
   router.delete('/projects/:projectId', asyncWrapper(deleteProjectsByProjectId))
 
   return router
