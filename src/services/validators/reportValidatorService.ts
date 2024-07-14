@@ -1,18 +1,23 @@
-import { ApiError, ApiErrorCodes } from '@/middleware/errorhandler/APIError'
-import { ReportDto } from '@api/generated'
 import { z } from 'zod'
+import { ReportDto } from '@api/generated'
+import { ApiError, ApiErrorCodes } from '../../middleware/errorhandler/APIError'
 
 /**
  * This is a zod schema for the id object used to validate the id of a report.
  */
-const reportIdValidator = z.string()
+const reportIdValidator = z.string().uuid()
+
+/**
+ * This is a zod schema for the text object used to validate the text of a report.
+ */
+const reportTextValidator = z.string().min(1)
 
 /**
  * This is a zod schema for the report object used to validate the object on creation.
  */
 export const newReportValidator = z.object({
   id: z.optional(reportIdValidator),
-  text: z.string(),
+  text: reportTextValidator,
   project_id: z.string(),
 })
 
@@ -21,7 +26,7 @@ export const newReportValidator = z.object({
  */
 export const updateReportValidator = z.object({
   id: reportIdValidator,
-  text: z.string(),
+  text: reportTextValidator,
   project_id: z.string(),
 })
 
@@ -62,6 +67,20 @@ export const validateUpdateReport = (report: ReportDto): ReportDto => {
 export const validateReportId = (id: string | undefined): string => {
   try {
     return reportIdValidator.parse(id)
+  } catch (error) {
+    throw new ApiError(ApiErrorCodes.BAD_REQUEST, String(error))
+  }
+}
+
+/**
+ * Validates a report text.
+ * @param {string} text The text to validate.
+ * @returns {string} The validated text.
+ * @throws {ApiError} If the text is invalid.
+ */
+export const validateReportText = (text: string | undefined): string => {
+  try {
+    return reportTextValidator.parse(text)
   } catch (error) {
     throw new ApiError(ApiErrorCodes.BAD_REQUEST, String(error))
   }

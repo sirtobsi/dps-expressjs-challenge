@@ -1,12 +1,12 @@
-import { ApiError, ApiErrorCodes } from '@/middleware/errorhandler/APIError'
-import { ProjectDto } from '@api/generated'
 import { z } from 'zod'
+import { ProjectDto } from '@api/generated'
+import { ApiError, ApiErrorCodes } from '../../middleware/errorhandler/APIError'
 import { updateReportValidator } from './reportValidatorService'
 
 /**
  * This is a zod schema for the id object used to validate the id of a project.
  */
-const projectIdValidator = z.string()
+const projectIdValidator = z.string().uuid()
 
 /**
  * This is a zod schema for the project object used to validate the object on creation.

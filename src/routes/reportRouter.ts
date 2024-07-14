@@ -1,12 +1,14 @@
 import { Router } from 'express'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import asyncWrapper from '../middleware/errorhandler/asyncWrapper'
+import { getReports } from '../controllers/reportController'
 
 /**
  * The router for the report resource.
  */
 const reportRouter = () => {
   const router = Router()
+
+  router.get('/', asyncWrapper(getReports))
 
   return router
 }

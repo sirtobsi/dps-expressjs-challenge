@@ -125,3 +125,16 @@ export const getReportsWithQueryWord3Times = async (
   })
   return reportsWithQueryWord3Times
 }
+
+export const checkIfReportBelongsToProject = async (
+  reportId: string,
+  projectId: string,
+): Promise<void> => {
+  const report = await findReportById(reportId)
+  if (report.projectId !== projectId) {
+    throw new ApiError(
+      ApiErrorCodes.BUSINESS_LOGIC_ERROR,
+      `The report with id ${reportId} does not belong to the project with id ${projectId}.`,
+    )
+  }
+}
