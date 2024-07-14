@@ -6,6 +6,8 @@ import cors from 'cors'
 import logger from './middleware/logger/logger'
 import requestLogger from './middleware/logger/httplogger'
 import { HelloWorldResponseDto } from '../api/generated'
+import reportRouter from './routes/reportRouter'
+import projectRouter from './routes/projectRouter'
 
 dotenv.config()
 
@@ -25,6 +27,9 @@ app.use(requestLogger)
 app.get('/', (_: Request, res: Response) => {
   res.status(200).json({ msg: 'Hello World!' } as HelloWorldResponseDto)
 })
+
+app.use('/reports', [reportRouter()])
+app.use('/projects', [projectRouter()])
 
 app.listen(port, () => {
   logger.info(`Server is running at http://localhost:${port}`)
