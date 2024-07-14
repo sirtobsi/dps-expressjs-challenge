@@ -10,12 +10,14 @@
 		"format": "eslint src/**/*.ts --fix",
 		"type-check": "tsc --noEmit",
 		"prepare": "husky",
-		"api:gen": "rimraf ./api/generated && openapi --input ./api/src/api-spec.yaml --output ./api/generated"
+		"api:gen": "rimraf ./api/generated && openapi --input ./api/src/api-spec.yaml --output ./api/generated",
+		"prisma:gen": "npx prisma generate"
 	},
 	"lint-staged": {
 		"**/*.ts": "eslint"
 	},
 	"dependencies": {
+		"@prisma/client": "^5.16.2",
 		"better-sqlite3": "^11.0.0",
 		"cookie-parser": "~1.4.4",
 		"cors": "^2.8.5",
@@ -54,6 +56,7 @@
 		"nodemon": "^3.1.3",
 		"openapi-typescript-codegen": "^0.29.0",
 		"prettier": "^3.3.1",
+		"prisma": "^5.16.2",
 		"rimraf": "^6.0.1",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.4.5"

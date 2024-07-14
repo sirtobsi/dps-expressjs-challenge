@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import YAML from 'yamljs'
 import swaggerUi from 'swagger-ui-express'
 import cors from 'cors'
+import { PrismaClient } from '@prisma/client'
 import logger from './middleware/logger/logger'
 import requestLogger from './middleware/logger/httplogger'
 import { HelloWorldResponseDto } from '../api/generated'
@@ -11,7 +12,9 @@ import projectRouter from './routes/projectRouter'
 
 dotenv.config()
 
-const app: Express = express()
+export const prisma = new PrismaClient()
+
+export const app: Express = express()
 const port = process.env.PORT || 3000
 
 app.use(express.json())
