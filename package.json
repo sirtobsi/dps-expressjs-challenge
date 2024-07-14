@@ -9,7 +9,8 @@
 		"lint": "eslint src/**/*.ts",
 		"format": "eslint src/**/*.ts --fix",
 		"type-check": "tsc --noEmit",
-		"prepare": "husky"
+		"prepare": "husky",
+		"api:gen": "rimraf ./api/generated && openapi --input ./api/src/api-spec.yaml --output ./api/generated"
 	},
 	"lint-staged": {
 		"**/*.ts": "eslint"
@@ -17,6 +18,7 @@
 	"dependencies": {
 		"better-sqlite3": "^11.0.0",
 		"cookie-parser": "~1.4.4",
+		"cors": "^2.8.5",
 		"debug": "~2.6.9",
 		"dotenv": "^16.4.5",
 		"express": "^4.19.2",
@@ -24,15 +26,20 @@
 		"jsonwebtoken": "^9.0.2",
 		"morgan": "~1.9.1",
 		"pug": "^3.0.3",
+		"swagger-ui-express": "^5.0.1",
 		"uuid": "^10.0.0",
-		"winston": "^3.13.1"
+		"winston": "^3.13.1",
+		"yamljs": "^0.3.0"
 	},
 	"devDependencies": {
 		"@types/better-sqlite3": "^7.6.10",
+		"@types/cors": "^2.8.17",
 		"@types/express": "^4.17.21",
 		"@types/jsonwebtoken": "^9.0.6",
 		"@types/node": "^20.14.2",
+		"@types/swagger-ui-express": "^4.1.6",
 		"@types/uuid": "^9.0.8",
+		"@types/yamljs": "^0.2.34",
 		"@typescript-eslint/eslint-plugin": "^7.12.0",
 		"@typescript-eslint/parser": "^7.12.0",
 		"eslint": "^8.57.0",
@@ -44,7 +51,9 @@
 		"husky": "^9.0.11",
 		"lint-staged": "^15.2.5",
 		"nodemon": "^3.1.3",
+		"openapi-typescript-codegen": "^0.29.0",
 		"prettier": "^3.3.1",
+		"rimraf": "^6.0.1",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.4.5"
 	}

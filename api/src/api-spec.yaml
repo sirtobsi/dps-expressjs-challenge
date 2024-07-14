@@ -1,0 +1,329 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Project Server
+  description: API for project & reports backend.
+servers:
+  - url: "{baseURL}" # for local testing
+    variables:
+      baseURL:
+        default: "http://localhost:8080"
+        description: Base URL of the server
+    description: Local server
+tags:
+  - name: default
+    description: some testing stuff
+  - name: projects
+    description: all project related operations
+  - name: reports
+    description: all report related operations
+
+paths:
+  /:
+    get:
+      tags:
+        - default
+      summary: Get Hello World!
+      description: Get Hello World!
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelloWorldResponseDto"
+
+  /projects:
+    get:
+      tags:
+        - projects
+      summary: Get all projects
+      description: Get all projects
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProjectDto"
+    post:
+      tags:
+        - projects
+      summary: Create a project
+      description: Create a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectDto"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectDto"
+
+  /projects/{projectId}:
+    get:
+      tags:
+        - projects
+      summary: Get a project
+      description: Get a project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: ID of the project to get
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectDto"
+    put:
+      tags:
+        - projects
+      summary: Update a project
+      description: Update a project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: ID of the project to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectDto"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectDto"
+    delete:
+      tags:
+        - projects
+      summary: Delete a project
+      description: Delete a project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: ID of the project to delete
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No Content
+
+  /projects/{projectId}/reports:
+    get:
+      tags:
+        - reports
+      summary: Get all reports of a project
+      description: Get all reports of a project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: ID of the project to get reports
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReportDto"
+    post:
+      tags:
+        - reports
+      summary: Create a report for a project
+      description: Create a report for a project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: ID of the project to create report for
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReportDto"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportDto"
+
+  /projects/{projectId}/reports/{reportId}:
+    get:
+      tags:
+        - reports
+      summary: Get a report of a project
+      description: Get a report of a project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: ID of the project to get report from
+          schema:
+            type: string
+        - name: reportId
+          in: path
+          required: true
+          description: ID of the report to get
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportDto"
+    put:
+      tags:
+        - reports
+      summary: Update a report of a project
+      description: Update a report of a project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: ID of the project to update report from
+          schema:
+            type: string
+        - name: reportId
+          in: path
+          required: true
+          description: ID of the report to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReportDto"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportDto"
+    delete:
+      tags:
+        - reports
+      summary: Delete a report of a project
+      description: Delete a report of a project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: ID of the project to delete report from
+          schema:
+            type: string
+        - name: reportId
+          in: path
+          required: true
+          description: ID of the report to delete
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No Content
+
+  /reports:
+    get:
+      tags:
+        - reports
+      summary: Get all reports where the given query word occurs at least 3x
+      description: Get all reports
+      parameters:
+        - name: query
+          in: query
+          required: true
+          description: Query word that needs to occur at least 3x
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReportDto"
+
+components:
+  schemas:
+    HelloWorldResponseDto:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: Hello World!
+      required:
+        - msg
+    ProjectDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: "Project 1"
+        description:
+          type: string
+          example: "This is project 1"
+        reports:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReportDto"
+      required:
+        - name
+        - description
+    ReportDto:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+          example: "Report 1"
+        project_id:
+          type: string
+      required:
+        - text
+        - project_id
+    
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+security:
+  - bearerAuth: [] 
